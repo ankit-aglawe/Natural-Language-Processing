@@ -1,0 +1,4 @@
+The field of study that focuses on the interactions between human language and computers is called Natural Language Processing, or NLP for short.
+Natural Language Processing is a field that covers computer understanding and manipulation of human language and its ripe with possibilities for new gathering.
+NLP is a way for computers to analyze, understand, and derive meaning from human language in a smart and useful way.
+NLP is characterized as a hard problem in computer science.
