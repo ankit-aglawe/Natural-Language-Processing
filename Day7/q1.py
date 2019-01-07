@@ -1,6 +1,9 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
 from textblob import Word
 from textblob import TextBlob 
+import matplotlib.pyplot as plt
+import numpy as np 
+from sklearn.cluster import KMeans
 
 
 
@@ -9,72 +12,41 @@ s2 ='Located in the Pacific Ocean, it lies off the eastern coast of the Asian co
 s3= 'The kanji that make up Japans name mean sun origin, and it is often called the Land of the Rising Sun.'
 s4='The Greater Tokyo Area is the most populous metropolitan area in the world with over 38 million people.'
 
-t1 =TextBlob(s1)
-t2 =TextBlob(s2)
-t3 =TextBlob(s3)
-t4 =TextBlob(s4)
 
-document = [t1,t2,t3,t4]
-print(document)
-doclist=[]
-for doc in document:
-    WordList = doc.words
-    for word in WordList :
-        doclist.append(word)
-        
-doclist = WordList(doclist)
-print(doclist)
+documents =[s1,s2,s3,s4]
 
-tflist=[]
-for word in doclist:
-    tf = doclist.words.count(word)
-    tflist.append(tf)
-    
-print(tflist)
-
-'''
-
-for doc in document:
-    WordList = doc.words
-    for word in WordList :
-        tf = doc.words.count(word)
-        tflist.append(tf)
-        print('{0} -- {1} '.format(word,str(tf)))
-        
-print('=============================')        
-
-dataset =[s1,s2,s3,s4]
-
-print(dataset)
-print(tflist)
+def count():
+    model = TfidfVectorizer(stop_words='english')
+    matrix = model.fit_transform(documents)
+    dic = model.vocabulary_ 
+    for key in dic.keys():
+        print('{} {}'.format(key,dic[key]))
+count()
 
 tfidf = TfidfVectorizer(stop_words='english')
+tfidf.fit(documents)
+dict = tfidf.vocabulary_
+print(tfidf.vocabulary_)
+counts = dict.values()
 
-tfidf.fit(dataset)
-#print(tfidf.vocabulary_)
+length = len(dict.keys())
+x_lab = []
+for key in dict.keys():
+	x_lab.append(key)
 
-data = tfidf.vocabulary_
+print('Length :', length)
+words = np.arange(0,length)
 
-#print(data.keys())
-#print(data.values())
-datalist =[]
-for key in data.keys():
-    print('{0}   {1}'.format(key,data[key]))
-    datalist.append(data[key])
+model = KMeans(n_clusters=length);
+X = list(zip(words, counts))
+model.fit(X)
 
-print(datalist)
-from sklearn.cluster import KMeans
+print(model.labels_)
+print(dict.keys())
 
-print(len(tflist))
-print(len(datalist))
-
-#x = list(zip(tflist,datalist))
-model = KMeans(n_clusters=3)
-
-model.fit_transform(tfidf)
-import matplotlib.pyplot as plt
-
-plt.scatter(tfidf,datalist,c =tflist)
+plt.scatter(words,counts,c=model.labels_)
+plt.xlabel("Words")
+plt.ylabel("Occurance")
+plt.xticks(words, x_lab, rotation=90)
+#plt.legend(loc="best", labels=x_lab)
 plt.show()
-
-'''
