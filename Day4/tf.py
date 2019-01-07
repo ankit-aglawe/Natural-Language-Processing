@@ -15,15 +15,8 @@ doc = doc1
 
 chooseWord = Word('Magnum')
 
-wordList =doc.words
+docList=[doc1,doc2]
 
-docList = [doc1,doc2]
-
-#print(wordList)
-#print(docList)
-
-
-wordtimes =0
 
 def wordmatch(doc, word):
     if wordList.count(word)>0:
@@ -31,30 +24,24 @@ def wordmatch(doc, word):
     else: return 0
 
 scores ={}
+wordtimes =0
 
 for doc in docList :
-    wordtimes = wordtimes + wordmatch(doc, chooseWord)
+    wordList =doc.words
     print('===============================================')
     print('Top words in Documents are:')
     for word in wordList:
-        print('-------------------------------------------')
+        wordtimes = wordtimes + wordmatch(doc,word)
         tf = wordList.count(word)
         ntf = (float)(tf)/(float)(len(wordList))
-        print(word +' = '+str(tf))
-        print('normalise freq = '+str(ntf))
-        scores.update({word:tf})
-        #sorted_words = sorted(scores.items(), key=lambda x: x[1], reverse=True)
-        #for word, score in sorted_words[:4]:
-            #print("Word: {}, TF-IDF: {}".format(word, round(score, 5)))
+        sub = (float)(len(docList))/(float)(wordtimes)
+        idf = 1 + math.log(sub)
+        tfidf = ntf*idf
 
-
-sub = (float)(len(docList))/(float)(wordtimes)
-
-idf = 1 + math.log(sub)
-
-print(idf)
-
-
+        scores.update({word:tfidf})
+        sorted_words = sorted(scores.items(), key=lambda x: x[1], reverse=True)
+    for word, score in sorted_words[:4]:
+        print("Word: {}, TF-IDF: {}".format(word, round(score, 5)))
 
 
 
