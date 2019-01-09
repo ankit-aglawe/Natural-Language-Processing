@@ -42,11 +42,11 @@ print('===============================================')
 import tweepy
 import re
 
-consumer_token ='psPgtumegDQSQxNzjPdhH4vnc'
-consumer_secret ='GYcw7bDGbuzBL6air0Up41JVCXwFufvErMaaY6WCEYsAItbiyp'
+consumer_token =''
+consumer_secret =''
 
-access_token ='382979839-nNfkNGqjKl9PuozFqeydRrmShwcmdBO5ISTQ9bkm'
-access_token_secret ='MItSLDoLVh6RjRvVRndiy6jAuzc3kzSZoArzpNsoizKQm'
+access_token =''
+access_token_secret =''
 
 auth = tweepy.OAuthHandler(consumer_token, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
